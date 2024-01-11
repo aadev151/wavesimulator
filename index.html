@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <img src="string1.gif" height="300" width="500" style="position: absolute; top: 250px; lefT: 400px" id="pic">
+    <img src="finger.png" height="200" width="80" style="position: absolute; top: 400px; left: 420px;" id="finpic">
+
+    <p style="font-family: Arial, Helvetica, sans-serif; position: absolute; top: 650px; left: 400px; font-size: 21px; font-weight: 600;">Amplitude</p>
+    <input type="range" style="position: absolute; top: 700px; left: 400px; width: 200px;" min="150" max="400" value="300" id="amplitude">
+
+    <p style="font-family: Arial, Helvetica, sans-serif; position: absolute; top: 650px; left: 670px; font-size: 21px; font-weight: 600;">Finger position</p>
+    <input type="range" style="position: absolute; top: 700px; left: 670px; width: 200px;" min="0" max="55" value="0" id="finger">
+    
+    <p style="font-family: Arial, Helvetica, sans-serif; position: absolute; top: 650px; left: 940px; font-size: 21px; font-weight: 600;">Number of nodes</p>
+    <input type="radio" style="position: absolute; top: 700px; left: 940px;;" id="1" value="1" name="nodes">
+    <input type="radio" style="position: absolute; top: 700px; left: 970px;;" id="2" value="2" name="nodes">
+    <input type="radio" style="position: absolute; top: 700px; left: 1000px;;" id="3" value="3" name="nodes">
+
+    <script>
+        var slider = document.getElementById("amplitude");
+        slider.oninput = function(event){
+            document.getElementById("pic").setAttribute("height", `${slider.value}px`);
+            document.getElementById("pic").style.top = `${250 + (300 - slider.value) / 2}px`;
+        }
+
+        document.getElementById("finger").oninput = function(event){
+            document.getElementById("pic").setAttribute("width", `${500 - document.getElementById("finger").value}px`);
+            document.getElementById("pic").style.left = `${400 - (-document.getElementById("finger").value)}px`;
+            document.getElementById("finpic").style.left = `${420 - (-document.getElementById("finger").value)}px`;
+            document.getElementsByName("nodes").forEach( (item) => {
+                if (item.checked) {
+                    if (item.id !== "1") {
+                        document.getElementById("finpic").style.left = `${405 - (-document.getElementById("finger").value)}px`;
+                    }
+                }
+            })
+        }
+
+        document.getElementsByName("nodes").forEach( (item) => item.onchange = function(event){
+            if (item.checked) {
+                document.getElementById("pic").setAttribute("src", `string${item.value}.gif`);
+                if (item.id !== "1") {
+                    document.getElementById("finpic").style.left = `${405 - (-document.getElementById("finger").value)}px`;
+                } else {
+                    document.getElementById("finpic").style.left = `${420 - (-document.getElementById("finger").value)}px`;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
